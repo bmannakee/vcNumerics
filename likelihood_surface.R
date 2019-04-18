@@ -47,7 +47,8 @@ fr_wes <- fr %>% mutate(lik= map2_dbl(.$depth,.$alt, model_likelihood),
                         log_expected_errors = map2_dbl(.$alt,.$depth,error_num_expected_wes),
                         tlod = log10(lik) - log10(null_lik),
                         vaf = alt/depth,
-                        log_expected_true = truth_expected_wes(vaf))
+                        log_expected_true = truth_expected_wes(vaf),
+                        tf_ratio = 10**(log_expected_true-log_expected_errors))
 
 
 
@@ -70,6 +71,8 @@ p15 <- ggplot(fr_wes,aes(x=depth,y=alt,z=log_expected_true)) + geom_contour(aes(
 p16 <- direct.label(p15,list("far.from.others.borders", "calc.boxes", "enlarge.box", hjust=1,vjust=1,
                            box.color = NA, fill = "transparent", "draw.rects")) + 
   theme_bw() + ggtitle("Log expected true positives")
+
+p17 <- ggplot(fr_wes %>% dplyr::filter(tlod < 8 & tlod > 4),aes(x=tlod,y=log10(tf_ratio))) + geom_point(aes(colour=as.factor(alt)))
 
 
 p_final_wes <- cowplot::plot_grid(p10,p12,p14,p16,nrow=2)
