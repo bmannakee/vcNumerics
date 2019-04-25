@@ -43,3 +43,7 @@ truth_expected_wes <- function(vaf){
   log10(3/vaf)
 }
 
+#####
+# Create a function for the slope and gradient of the FP/TP ratio.
+# TP/FP = #expected False positives at a given depth and vaf/# expected True positives
+# Where the expected number of false positivies is 

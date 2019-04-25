@@ -72,7 +72,7 @@ p16 <- direct.label(p15,list("far.from.others.borders", "calc.boxes", "enlarge.b
                            box.color = NA, fill = "transparent", "draw.rects")) + 
   theme_bw() + ggtitle("Log expected true positives")
 
-p17 <- ggplot(fr_wes %>% dplyr::filter(tlod < 8 & tlod > 4),aes(x=tlod,y=log10(tf_ratio))) + geom_point(aes(colour=as.factor(alt)))
-
+p17 <- ggplot(fr_wes %>% dplyr::filter(tlod < 8 & tlod > 4),aes(x=tlod,y=alt/depth)) + geom_point(aes(colour=as.factor(tf_ratio)))
+p18 <- ggplot(fr_wes %>% dplyr::filter(tlod < 8 & tlod > 4),aes(x=depth,y=alt/depth,z=tf_ratio)) + geom_contour(aes(colour=stat(level)))
 
 p_final_wes <- cowplot::plot_grid(p10,p12,p14,p16,nrow=2)
